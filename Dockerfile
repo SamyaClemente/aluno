@@ -5,7 +5,7 @@ FROM openjdk:17-jdk-slim
 WORKDIR /app
 
 # Copie o jar da sua aplicação para o diretório /app na imagem
-COPY target/aluno.jar /app/aluno.jar
+COPY target/com.example.aluno.aluno.jar /app/com.example.aluno.aluno.jar
 
 # Expõe a porta 8080 para acesso externo
 EXPOSE 8080
