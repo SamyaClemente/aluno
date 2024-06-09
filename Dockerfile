@@ -11,4 +11,4 @@ COPY target/aluno-0.0.1-SNAPSHOT.jar /app/aluno-0.0.1-SNAPSHOT.jar
 EXPOSE 8080
 
 # Comando para executar a aplicação quando o container for iniciado
-CMD ["java", "-jar", "sua-aplicacao.jar"]
+CMD ["java", "-jar", "aluno-0.0.1-SNAPSHOT.jar"]
