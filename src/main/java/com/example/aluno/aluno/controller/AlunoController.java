@@ -48,7 +48,8 @@ public class AlunoController {
     @PutMapping("/{id}")
     @Operation(summary = "Atualizar aluno", description = "Atualiza os detalhes de um aluno existente com base no ID fornecido.")
     public ResponseEntity<Aluno> updateAluno(@PathVariable Long id, @RequestBody Aluno alunoDetails) {
-        return alunoService.updateAluno(id, alunoDetails);
+         alunoService.updateAluno(id, alunoDetails);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
