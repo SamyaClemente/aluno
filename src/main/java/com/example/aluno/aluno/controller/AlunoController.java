@@ -1,6 +1,8 @@
 package com.example.aluno.aluno.controller;
 
 import com.example.aluno.aluno.domain.Aluno;
+import com.example.aluno.aluno.domain.AlunoCompleto;
+import com.example.aluno.aluno.service.AlunoCompletoService;
 import com.example.aluno.aluno.service.AlunoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,16 +20,21 @@ public class AlunoController {
     @Autowired
     private AlunoService alunoService;
 
+
+    @Autowired
+    private AlunoCompletoService alunoCompletoService;
+
     @GetMapping
     @Operation(summary = "Obter todos os alunos", description = "Retorna uma lista de todos os alunos.")
-    public List<Aluno> getAllAlunos() {
-        return alunoService.getAllAlunos();
+    public List<AlunoCompleto> getAlunosCompletos() {
+        return alunoCompletoService.obterTodosAlunosCompletos();
     }
+
 
     @GetMapping("/{id}")
     @Operation(summary = "Obter aluno por ID", description = "Retorna um único aluno com base no ID fornecido.")
-    public ResponseEntity<Aluno> getAlunoById(@PathVariable Long id) {
-        return alunoService.getAlunoById(id);
+    public AlunoCompleto getAlunoCompletoPorId(@PathVariable Long id) {
+        return alunoCompletoService.obterAlunoCompletoPorId(id);
     }
 
     @PostMapping

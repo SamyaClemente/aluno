@@ -13,8 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class AlunoService {
@@ -78,12 +80,12 @@ public class AlunoService {
             aluno.setData_matricula(alunoDetails.getData_matricula());
             aluno.setObservacoes(alunoDetails.getObservacoes());
 
-            aluno.getMatriculas().clear();
-            for (Matricula matricula : alunoDetails.getMatriculas()) {
-                matricula.setAluno(aluno);
-                Turma turma = matricula.getTurma();
+            Set<Matricula> matriculasToUpdate = new HashSet<>();
 
+            for (Matricula matricula : alunoDetails.getMatriculas()) {
+                Turma turma = matricula.getTurma();
                 Curso curso = turma.getCurso();
+
                 if (curso.getId_curso() == null) {
                     curso = cursoRepository.save(curso);
                 }
@@ -94,8 +96,17 @@ public class AlunoService {
                 }
 
                 matricula.setTurma(turma);
-                aluno.getMatriculas().add(matricula);
+                matricula.setAluno(aluno);
+
+                // Verifica se a matrícula já existe
+                if (matricula.getId_matricula() != null) {
+                    matriculasToUpdate.add(matricula);
+                }
             }
+
+            // Limpa as matrículas existentes e adiciona as atualizadas
+            aluno.getMatriculas().clear();
+            aluno.getMatriculas().addAll(matriculasToUpdate);
 
             return ResponseEntity.ok(alunoRepository.save(aluno));
         } else {
